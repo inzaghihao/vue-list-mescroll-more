@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+    <!-- <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"> -->
+    <meta name="format-detection" content="telephone=no">
+    <meta name="applicable-device" content="mobile">
+	<title>全国校区</title>	
+	<link rel="stylesheet" href="css/reset.css">
+	<link rel="stylesheet" href="css/mescroll.css">
+	<link rel="stylesheet" href="css/style.css">
+	<script src="js/vue.js"></script>
+	<script src="js/axios.min.js"></script>
+	<script src="js/bscroll.min.js"></script>
+	<script src="js/mock.js"></script>
+	<script src="js/mescroll.m.js"></script>
+	<script>
+		//添加viewport-mate标签缩放网页。
+		!function(userAgent) {
+			if(userAgent.match(/AppleWebKit.*Mobile.*/)) {
+				var screen_w = parseInt(window.screen.width),
+					scale = screen_w / 750;
+				if(/Android (\d+\.\d+)/.test(userAgent)) {
+					var version = parseFloat(RegExp.$1);
+					if(userAgent.indexOf("MX") > -1 && version >= 5) {
+						//alert(userAgent)
+						document.write('<meta name="viewport" content="width=750,minimum-scale = ' + scale + ', maximum-scale = ' + scale + ', target-densitydpi=device-dpi">');
+					} else {
+						document.write(version > 2.3 ? '<meta name="viewport" content="width=750, minimum-scale = ' + scale + ', maximum-scale = ' + scale + ', target-densitydpi=device-dpi">' : '<meta name="viewport" content="width=750, target-densitydpi=device-dpi">');
+					};
+				} else {
+					document.write('<meta name="viewport" content="width=750, user-scalable=no, target-densitydpi=device-dpi">');
+				}
+			}
+		}(navigator.userAgent);
+	</script>
+</head>
+<body>
+	<div id="app">
+		<!-- nav-tab -->
+		<div class="tab">
+		  <div class="tab-item" v-for="(item,index) in nav" v-bind:class="{active:(currentIndex == index)}" @click="selectNav(index)">
+		    <span class="tab-link">{{ item.nav }}</span>
+		 	</div>
+		</div>
+		
+		<div class="main-wrapper">
+			<!-- banner -->
+			<div class="slider-wrapper">
+			  <slider>
+			  	<div v-for="item in slider">
+			  		<a :href = "item.linkUrl">
+			  			<img class="needsclick" :src="item.picUrl" alt="">
+			  		</a>
+			  	</div>
+			  </slider>
+			</div>
+			<!-- <scroll class="recommend-content" :data="newsList" ref="scroll" :pullup="true" :pulldown="true" @onpullingdown="loadData" @onpullingup="loadMore"> -->
+	
+					
+					
+					<keep-alive>
+					<transition name="fade">
+					<div id="mescroll0" class="tab-con mescroll" v-show="currentIndex == 0">
+							<ul id="dataList0" class="news-list">
+								<li class="news-item" v-for="item in newsList0">
+									<div class="pic">
+										<img :src="item.pdImg" alt="" >
+									</div>
+									<div class="news-info">
+										<h2 class="title">{{ item.pdName }}</h2>
+										<p class="desc ellipsis_line3">
+											{{ item.pdName }}
+										</p>
+										<div class="news-con">
+											<time>{{ item.pdPrice }}</time>
+											<span class="reading">{{ item.pdSold }}</span>
+										</div>
+									</div>
+								</li>
+							</ul>
+					</div>
+					</transition>
+					</keep-alive>
+					
+					<keep-alive>
+					<transition name="fade">
+					<div id="mescroll1" class="tab-con mescroll" v-show="currentIndex == 1">
+							<ul id="dataList1" class="news-list">
+								<li class="news-item" v-for="item in newsList1">
+									<div class="pic">
+										<img :src="item.pdImg" alt="" >
+									</div>
+									<div class="news-info">
+										<h2 class="title">{{ item.pdName }}</h2>
+										<p class="desc ellipsis_line3">
+											{{ item.pdName }}
+										</p>
+										<div class="news-con">
+											<time>{{ item.pdPrice }}</time>
+											<span class="reading">{{ item.pdSold }}</span>
+										</div>
+									</div>
+								</li>
+							</ul>
+					</div>
+					</transition>
+					</keep-alive>
+
+					<keep-alive>
+					<transition name="fade">
+					<div id="mescroll2" class="tab-con mescroll" v-show="currentIndex == 2">
+							<ul id="dataList2" class="news-list">
+								<li class="news-item" v-for="item in newsList2">
+									<div class="pic">
+										<img :src="item.pdImg" alt="" >
+									</div>
+									<div class="news-info">
+										<h2 class="title">{{ item.pdName }}</h2>
+										<p class="desc ellipsis_line3">
+											{{ item.pdName }}
+										</p>
+										<div class="news-con">
+											<time>{{ item.pdPrice }}</time>
+											<span class="reading">{{ item.pdSold }}</span>
+										</div>
+									</div>
+								</li>
+							</ul>
+					</div>
+					</transition>
+					</keep-alive>
+
+					<keep-alive>
+					<transition name="fade">
+					<div id="mescroll3" class="tab-con mescroll" v-show="currentIndex == 3">
+							<ul id="dataList3" class="news-list">
+								<li class="news-item" v-for="item in newsList3">
+									<div class="pic">
+										<img :src="item.pdImg" alt="" >
+									</div>
+									<div class="news-info">
+										<h2 class="title">{{ item.pdName }}</h2>
+										<p class="desc ellipsis_line3">
+											{{ item.pdName }}
+										</p>
+										<div class="news-con">
+											<time>{{ item.pdPrice }}</time>
+											<span class="reading">{{ item.pdSold }}</span>
+										</div>
+									</div>
+								</li>
+							</ul>
+					</div>
+					</transition>
+					</keep-alive>
+
+				
+			<!-- </scroll> -->
+		</div>
+		<!-- <div class="loading-container1" v-show="!newsList0.length">
+			<loading></loading>
+		</div> -->
+	</div>
+	<!-- banner -->
+	<script>
+
+		// loading 加载组件
+		Vue.component('loading', {
+			props:{
+				title:{
+				  type:String,
+				  default:"正在加载..."
+				}
+			},
+			template: `<div class="loading">
+							    <img width="48" height="48" src="./images/loading.gif" alt="loading">
+							  	<p class="desc">{{title}}</p>
+							  </div>`
+		})
+
+		var Slider = {
+			props: {
+				loop:{
+				  type:Boolean,
+				  default:true
+				},
+				autoPlay:{
+				  type:Boolean,
+				  default:true
+				},
+				interval:{
+				  type:Number,
+				  default: 4000
+				},
+				click: {
+	        type: Boolean,
+	        default: true
+	      }
+			},
+			data(){
+				return {
+					dots:[],
+					currentPageIndex:0
+				}
+			},
+			mounted(){
+			  setTimeout(() => {
+			    this._setSliderWidth();
+			    this._initDots();
+			    this._initSlider();
+			    if(this.autoPlay){
+			      this._play();
+			    }
+			  },20),
+			  window.addEventListener("resize",()=>{
+			    if(!this.slider){
+			      return;
+			    }
+			    this._setSliderWidth(true);
+			    this.slider.refresh();
+			  })
+			},
+		  template: `<div class="slider" ref="slider">
+    					<div class="slider-group" ref="sliderGroup">
+					      <slot>
+					      </slot>
+					    </div>
+					    <div class="dots">
+					      <span class="dot" :class="{active: currentPageIndex === index }" v-for="(item, index) in dots"></span>
+					    </div>
+					  </div>`,
+			methods:{
+				addClass(el,className){
+					if(this.hasClass(el,className)){
+						return;
+					}
+					let newClass = el.className.split(" ");
+					newClass.push(className);
+					el.className = newClass.join(" ");
+				},
+				hasClass(el,className){
+					let reg = new RegExp('(^|\\s)' + className + '(\\s|$)');
+					return reg.test(el.className);
+				},
+				_setSliderWidth(isResize){
+				  this.children = this.$refs.sliderGroup.children;
+				  let width = 0;
+				  let sliderWidth = this.$refs.slider.clientWidth;
+				  for(let i = 0;i<this.children.length;i++){
+				    let child = this.children[i];
+				    this.addClass(child,"slider-item");
+				    child.style.width = sliderWidth + "px";
+				    width += sliderWidth;
+				  }
+				  if(this.loop && !isResize){
+				    width += 2*sliderWidth;
+				  }
+				  this.$refs.sliderGroup.style.width = width + "px"
+				},
+				_initSlider(){
+				  this.slider = new BScroll(this.$refs.slider,{
+				    scrollX:true,
+				    scrollY:false,
+				    momentum:false,
+				    snap:{
+				    	loop:this.loop,
+				    	threshold: 0.3,
+				    	speed: 400
+				    },
+				    click:this.click
+				  })
+				  this.slider.on("scrollEnd",() => {
+				    let pageIndex = this.slider.getCurrentPage().pageX;
+				    if(this.loop){
+				      pageIndex -=1;
+				    }
+				    this.currentPageIndex = pageIndex;
+				    if(this.autoPlay){
+				      clearTimeout(this.timer);
+				      this._play();
+				    }
+				  })
+				},
+				_initDots(){
+				  this.dots = new Array(this.children.length);
+				},
+				_play(){
+				  let pageIndex = this.currentPageIndex + 1;
+				  if(this.loop){
+				    pageIndex += 1;
+				  }
+				  this.timer = setTimeout(()=>{
+				    this.slider.goToPage(pageIndex,0,400)
+				  },this.interval)
+				}
+			}
+		}
+
+		var app = new Vue({
+		  el: '#app',
+	    created() {
+	  		// this._getSlider();
+	      //为看loading效果故意延时
+	      setTimeout(()=>{
+	  		  // this._getNewsList();
+	      },1000)
+	    },
+		  data: {
+		  	nav:[
+		  		{
+		  			nav:"活动资讯",
+		  		},
+		  		{
+		  			nav:"心理资讯",
+		  		},
+		  		{
+		  			nav:"学习心得",
+		  		},
+		  		{
+		  			nav:"教务通知",
+		  		}
+		  	],
+		  	currentIndex:0,
+		    slider:[
+		    	{
+		    		linkUrl:"###",
+		    		picUrl:"https://y.gtimg.cn/music/common/upload/t_focus_info_iphone/206546.jpg?max_age=2592000"
+		    	},
+		    	{
+		    		linkUrl:"###",
+		    		picUrl:"https://y.gtimg.cn/music/photo_new/T003R720x288M000001j3okm2dfLos.jpg?max_age=2592000",
+		    	},
+		    	{
+		    		linkUrl:"###",
+		    		picUrl:"https://y.gtimg.cn/music/photo_new/T003R720x288M000004SIeu94LIv4y.jpg?max_age=2592000"
+		    	}						
+		    ],
+		    mescrollArr:new Array(4),		//4个菜单所对应的4个mescroll对象
+		    newsList0:[],
+		    newsList1:[],
+		    newsList2:[],
+		    newsList3:[]
+		  },
+		  components:{
+		  	Slider
+		  },
+			mounted: function() {
+				//初始化首页
+				this.mescrollArr[0]=this.initMescroll("mescroll0", "dataList0");
+			},
+		  methods:{
+		  	selectNav(index){
+		  		if(this.currentIndex != index){
+		  			this.currentIndex = index;
+		  			if(this.mescrollArr[index]==null){
+		  				this.mescrollArr[index]=this.initMescroll("mescroll"+index, "dataList"+index);
+		  			}
+		  		}
+		  	},
+		  	initMescroll(mescrollId,clearEmptyId){
+		  		//创建MeScroll对象,内部已默认开启下拉刷新,自动执行up.callback,刷新列表数据;
+		  		var mescroll = new MeScroll(mescrollId, {
+		  			//上拉加载的配置项
+		  			up: {
+		  				callback: this.getListData, //上拉回调,此处可简写; 相当于 callback: function (page) { getListData(page); }
+		  				noMoreSize: 4, //如果列表已无数据,可设置列表的总数量要大于半页才显示无更多数据;避免列表数据过少(比如只有一条数据),显示无更多数据会不好看; 默认5
+		  				empty: {
+		  					warpId : clearEmptyId ,
+		  					icon: "images/mescroll-empty.png", //图标,默认null
+		  					tip: "暂无相关数据~", //提示
+		  					btntext: "去逛逛 >", //按钮,默认""
+		  					btnClick: function(){//点击按钮的回调,默认null
+		  						alert("点击了按钮,具体逻辑自行实现");
+		  					} 
+		  				},
+		  				// clearEmptyId: clearEmptyId, //相当于同时设置了clearId和empty.warpId; 简化写法;默认null
+		  				toTop:{ //配置回到顶部按钮
+		  					src : "images/mescroll-totop.png", //默认滚动到1000px显示,可配置offset修改
+		  					//offset : 1000
+		  				}
+		  			}
+		  		});
+		  		return mescroll;
+		  	},
+		  	getListData(page) {
+		  		//联网加载数据
+		  		var self = this;
+		  		var dataIndex=this.currentIndex; //记录当前联网的nav下标,防止快速切换时,联网回来curNavIndex已经改变的情况;
+		  		this.getListDataFromNet(dataIndex,page.num, page.size, function(pageData) {
+		  		
+		  			
+		  			//联网成功的回调,隐藏下拉刷新和上拉加载的状态;
+		  			//mescroll会根据传的参数,自动判断列表如果无任何数据,则提示空;列表无下一页数据,则提示无更多数据;
+		  			console.log("dataIndex="+dataIndex+", curNavIndex="+self.currentIndex+", page.num="+page.num+", page.size="+page.size+", pageData.length="+pageData.length);		  				
+		  			
+		  			//方法一(推荐): 后台接口有返回列表的总页数 totalPage
+		  			//self.mescroll.endByPage(curPageData.length, totalPage); //必传参数(当前页的数据个数, 总页数)
+		  			
+		  			//方法二(推荐): 后台接口有返回列表的总数据量 totalSize
+		  			//self.mescroll.endBySize(curPageData.length, totalSize); //必传参数(当前页的数据个数, 总数据量)
+		  			
+		  			//方法三(推荐): 您有其他方式知道是否有下一页 hasNext
+		  			//self.mescroll.endSuccess(curPageData.length, hasNext); //必传参数(当前页的数据个数, 是否有下一页true/false)
+		  			
+		  			//方法四 (不推荐),会存在一个小问题:比如列表共有20条数据,每页加载10条,共2页.如果只根据当前页的数据个数判断,则需翻到第三页才会知道无更多数据,如果传了hasNext,则翻到第二页即可显示无更多数据.
+		  			self.mescrollArr[dataIndex].endSuccess(pageData.length);
+
+		  			self.setListData(pageData,dataIndex,page);		  		
+		  		}, function() {
+		  			//联网失败的回调,隐藏下拉刷新和上拉加载的状态;
+		  			self.mescrollArr[dataIndex].endErr();
+		  		});
+		  	},
+		  	setListData(pageData,dataIndex,page){
+		  		//更新列表数据
+		  		switch(dataIndex){
+		  			case 0:
+		  				if(page.num == 1) this.newsList0 =[];
+		  				this.newsList0 = this.newsList0.concat(pageData);
+		  				break;
+		  			case 1:
+		  				if(page.num == 1) this.newsList1 =[];
+		  				this.newsList1 = this.newsList1.concat(pageData);
+		  				break;
+		  			case 2:
+		  				if(page.num == 1) this.newsList2 =[];
+		  				this.newsList2 = this.newsList2.concat(pageData);
+		  				break;
+		  			case 3:
+		  				if(page.num == 1) this.newsList3 =[];
+		  				this.newsList3 = this.newsList3.concat(pageData);
+		  				break;
+		  		}
+		  	},
+				/*联网加载列表数据*/
+				getListDataFromNet(curNavIndex,pageNum,pageSize,successCallback,errorCallback) {
+					//延时一秒,模拟联网
+					var that = this;
+            setTimeout(function () {
+            	axios.get('js/pdlist1.json').then((res)=>{
+             			var listData=[];
+             			var data = res.data;
+                	//currentIndex 首页0; 奶粉1; 面膜2; 图书3;
+                	if(curNavIndex==0){
+                		//首页 (模拟分页数据)
+										for (var i = (pageNum-1)*pageSize; i < pageNum*pageSize; i++) {
+			            		if(i==data.length) break;
+				            	listData.push(data[i]);
+			            	}
+							
+	                	}else if(curNavIndex==1){
+	                		//奶粉
+	                		for (var i = 0; i < data.length; i++) {
+	                			if (data[i].pdName.indexOf("奶粉")!=-1) {
+	                				listData.push(data[i]);
+	                			}
+	                		}
+	                		
+	                	}else if(curNavIndex==2){
+	                		//面膜
+	                		for (var i = 0; i < data.length; i++) {
+	                			if (data[i].pdName.indexOf("面膜")!=-1) {
+	                				listData.push(data[i]);
+	                			}
+	                		}
+	                		
+	                	}else if(curNavIndex==3){
+	                		//图书
+	                		for (var i = 0; i < data.length; i++) {
+	                			if (data[i].pdName.indexOf("图书")!=-1) {
+	                				listData.push(data[i]);
+	                			}
+	                		}
+	                	}
+                	//回调
+                	successCallback && successCallback(listData);
+                })
+            },500)
+				}
+		  }
+		})
+	</script>
+</body>
+</html>

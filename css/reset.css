@@ -1,0 +1,28 @@
+/*
+	Mobile Reset
+	Created in 2017-11-2
+	author : hao
+*/
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td,hr,button,article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{margin: 0; padding: 0;}
+body,button,input,select,textarea{font:400 14px/1.5 "Microsoft YaHei",hei,Arial,"Lucida Grande",Verdana;}
+article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section,iframe{display: block;}
+h1,h2,h3,h4,h5,h6{font-size: 100%;}
+address,cite,dfn,em,var,i{font-style: normal; font-weight: 400;}
+dfn{font-family: Arial;}
+img{vertical-align: top; border: none;}
+ul, ol{list-style: none;}
+a{color: #4a4a4a; text-decoration: none;}
+a:hover{transition: color .2s linear;}
+fieldset,button,input{border: 0;}
+button,input,select,textarea{font-size: 100%;}
+table{border-collapse: collapse; border-spacing: 0;}
+input{-webkit-appearance: none; border-radius: 0;}
+body{-webkit-text-size-adjust: none; -webkit-tap-highlight-color: rgba(0,0,0,0); -webkit-font-smoothing: antialiased;}
+:focus{outline: 0;}
+.clearfix{*zoom: 1;}
+.clearfix:after{clear: both; content: '.'; display: block; height: 0; visibility: hidden; line-height: 0;}
+.ellipsis{white-space: nowrap; overflow: hidden; text-overflow: ellipsis;word-break:keep-all;}
+.ellipsis_line2, .ellipsis_line3,.ellipsis_line4{overflow : hidden; text-overflow: ellipsis;display: -webkit-box; -webkit-box-orient: vertical;}
+.ellipsis_line2{-webkit-line-clamp: 2;}
+.ellipsis_line3{-webkit-line-clamp: 3;}
+.ellipsis_line4{-webkit-line-clamp: 4;}
